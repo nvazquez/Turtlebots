@@ -212,6 +212,15 @@ class Butia(Plugin):
             Primitive(self.refresh))
         special_block_colors['refreshButia'] = COLOR_PRESENT[:]
 
+        palette.add_block('refreshButia2',
+                     style='basic-style',
+                     label=_('refresh Butia 2'),
+                     prim_name='refreshButia',
+                     help_string=_('refresh the state of the Butia palette and blocks asda dasd'))
+        self.tw.lc.def_prim('refreshButia', 0,
+            Primitive(self.refresh))
+        special_block_colors['refreshButia2'] = COLOR_PRESENT[:]
+
         palette.add_block('batterychargeButia',
                      style='box-style',
                      label=_('battery charge Butia'),
@@ -622,6 +631,8 @@ class Butia(Plugin):
                                 blk.set_visibility(True)
                             special_block_colors[blk.name] = self.battery_color[:]
                         else:
+
+
                             special_block_colors[blk.name] = self.statics_color[:]
                         blk.refresh()
                 elif (blk.name in extras_block_list):
