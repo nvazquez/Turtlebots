@@ -37,7 +37,9 @@ PYBOT_HOST = 'localhost'
 PYBOT_PORT = 2009
 
 class robot(ButiaFunctions):
-    
+    """
+    Test
+    """
     def __init__(self, host=PYBOT_HOST, port=PYBOT_PORT, auto_connect=True):
         """
         init the robot class
