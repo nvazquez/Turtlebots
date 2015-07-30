@@ -31,7 +31,6 @@ import errno
 from functions import ButiaFunctions
 
 ERROR = -1
-ERROR_DESCONECTADO = -2
 
 PYBOT_HOST = 'localhost'
 PYBOT_PORT = 2009
@@ -64,7 +63,6 @@ class robot(ButiaFunctions):
             ret = self._client.recv(1024)
             ret = ret[:-1]
         except Exception, e:
-            ret = ERROR_DESCONECTADO
             self._process_error(e)
         try:
             ret = ret_type(ret)
