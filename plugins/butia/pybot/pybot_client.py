@@ -85,7 +85,7 @@ class robot(ButiaFunctions):
             self._client = socket.socket()
             self._client.connect((self._host, self._port))
         except:
-            return ERROR_DESCONECTADO
+            return ERROR
         return 0
 
     def refresh(self):

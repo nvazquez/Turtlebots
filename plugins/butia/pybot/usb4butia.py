@@ -33,6 +33,11 @@ from functions import ButiaFunctions
 
 ERROR = -1
 
+# (MONITOR_BUTIA) Distinguimos segun el tipo de error
+ERROR_BOARD_DISCONECTED = -100
+ERROR_MODULE_NOT_PRESENT = -101
+ERROR_EXCEPTION = -102
+
 class USB4Butia(ButiaFunctions):
 
     def __init__(self, debug=False, get_modules=True):
@@ -137,21 +142,21 @@ class USB4Butia(ButiaFunctions):
             number = int(number)
             board_number = int(board_number)
             if len(self._bb) < (board_number + 1):
-                return ERROR #Aca es donde vemos que esta desconectado
+                return ERROR_BOARD_DISCONECTED
             board = self._bb[board_number]
             if board.devices.has_key(number) and (board.devices[number].name == modulename):
                 return board.devices[number].call_function(function, params) #Aca puede venir un -1 y lo dejamos asi
             else:
                 number = self._open_or_validate(modulename, board) #Trata de obtener el modulo
                 if number == ERROR:
-                    return ERROR #Tengo la placa, no pude obtener el modulo
+                    return ERROR_MODULE_NOT_PRESENT
                 return board.devices[number].call_function(function, params) #Aca puede venir un -1 y lo dejamos asi
         except Exception, err:
             if hasattr(err, 'errno'):
                 if (err.errno == 5) or (err.errno == 19):
                     self.closeB(board)
             self._debug('ERROR:usb4butia:callModule', err)
-            return ERROR #Aca exploto
+            return ERROR_EXCEPTION #Aca exploto
 
     def refresh(self):
         """

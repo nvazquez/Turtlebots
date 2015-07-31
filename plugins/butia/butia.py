@@ -41,7 +41,15 @@ from TurtleArt.tatype import TYPE_INT, TYPE_FLOAT, TYPE_STRING, TYPE_NUMBER
 
 from plugins.plugin import Plugin
 
+# (MONITOR_BUTIA) Importamos MonitorButia
+from monitor import MonitorButia
+
 from gettext import gettext as _
+
+# (MONITOR_BUTIA) Distinguimos segun el tipo de error
+ERROR_BOARD_DISCONECTED = -100
+ERROR_MODULE_NOT_PRESENT = -101
+ERROR_EXCEPTION = -102
 
 #constants definitions
 ERROR = -1   # default return value in case of error
@@ -51,10 +59,6 @@ COLOR_NOTPRESENT = ["#A0A0A0","#808080"]
 COLOR_PRESENT = ["#00FF00","#008000"]
 BATTERY_RED = ["#FF0000","#808080"]
 BATTERY_ORANGE = ["#FFA500","#808080"]
-
-#Errores encontrados
-#COLOR_VARIOS_ERRORES Para esto vamos a guardar de todos los ultimos valores que se pidieron cuantas
-#veces dio -1 guardado en el robot de pybot client
 
 ERROR_SPEED = _('ERROR: The speed must be a value between 0 and 1023')
 ERROR_SPEED_ABS = _('ERROR: The speed must be a value between -1023 and 1023')
@@ -144,6 +148,10 @@ extras_block_list = ['setpinButia', 'getpinButia', 'pinmodeButia', 'highButia',
 class Butia(Plugin):
     
     def __init__(self, parent):
+
+        #Agregamos el monitor de Butia
+        self.monitor_butia = MonitorButia()
+        #--------------------------------
         Plugin.__init__(self)
         self.tw = parent
         self.init_gconf()
@@ -211,15 +219,6 @@ class Butia(Plugin):
         self.tw.lc.def_prim('refreshButia', 0,
             Primitive(self.refresh))
         special_block_colors['refreshButia'] = COLOR_PRESENT[:]
-
-        palette.add_block('refreshButia2',
-                     style='basic-style',
-                     label=_('refresh Butia 2'),
-                     prim_name='refreshButia',
-                     help_string=_('refresh the state of the Butia palette and blocks asda dasd'))
-        self.tw.lc.def_prim('refreshButia', 0,
-            Primitive(self.refresh))
-        special_block_colors['refreshButia2'] = COLOR_PRESENT[:]
 
         palette.add_block('batterychargeButia',
                      style='box-style',
@@ -744,7 +743,7 @@ class Butia(Plugin):
             sentRight = '0'
         else:
             sentRight = '1'
-        self.butia.set2MotorSpeed(sentLeft, str(abs(left)), sentRight, str(abs(right)), self.active_butia)
+        return self.butia.set2MotorSpeed(sentLeft, str(abs(left)), sentRight, str(abs(right)), self.active_butia)
 
     def move(self, left, right):
         try:
@@ -759,7 +758,8 @@ class Butia(Plugin):
             right = 0
         if (right < -MAX_SPEED) or (right > MAX_SPEED):
             raise logoerror(ERROR_SPEED_ABS)
-        self.set_vels(left, right)
+        value = self.set_vels(left, right)
+        self.monitor_butia.evaluate_result(value)
 
     def forward(self):
         self.set_vels(self.actualSpeed[0], self.actualSpeed[1])
