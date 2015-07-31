@@ -43,9 +43,6 @@ from plugins.plugin import Plugin
 
 # (MONITOR_BUTIA) Importamos MonitorButia y los tipos de errores
 from monitor import MonitorButia
-from plugins.butia.monitor import ERROR_BOARD_DISCONECTED
-from plugins.butia.monitor import ERROR_MODULE_NOT_PRESENT
-from plugins.butia.monitor import ERROR_EXCEPTION
 
 from gettext import gettext as _
 
@@ -757,7 +754,7 @@ class Butia(Plugin):
         if (right < -MAX_SPEED) or (right > MAX_SPEED):
             raise logoerror(ERROR_SPEED_ABS)
         value = self.set_vels(left, right)
-        self.monitor_butia.evaluate_result(value)
+        self.monitor_butia.evaluate_result('motors',value)
 
     def forward(self):
         self.set_vels(self.actualSpeed[0], self.actualSpeed[1])

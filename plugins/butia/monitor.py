@@ -9,27 +9,18 @@ ERROR_MODULE_NOT_PRESENT = -101
 ERROR_EXCEPTION = -102
 ERROR = -1
 
+from monitor_elem import MonitorElem
+
 class MonitorButia():
 
     def __init__(self):
-        self.count_board_disconected = 0
-        self.count_module_not_present = 0
-        self.count_error_exception = 0
-        self.count_error_butia = 0
+        self.sensors = {
+            'grey' : MonitorElem(),
+            'light' : MonitorElem(),
+            'distance' : MonitorElem(),
+            'button' : MonitorElem(),
+            'motors' : MonitorElem()
+        }
 
-    def evaluate_result(self, result):
-        if result == ERROR_BOARD_DISCONECTED:
-            self.count_board_disconected += 1
-        else:
-            if result == ERROR_MODULE_NOT_PRESENT:
-                self.count_module_not_present += 1
-            else:
-                if result == ERROR_EXCEPTION:
-                    self.count_error_exception += 1
-                else:
-                    if result == ERROR:
-                        self.count_error_butia += 1
-                    #else, valor normal, ver si lo contamos tambien
-
-    def get_count_board_disconected(self):
-        return self.count_board_disconected
+    def evaluate_result(self, sensor_name, sensor_result):
+        self.sensors[sensor_name].evaluate_result(sensor_result)
