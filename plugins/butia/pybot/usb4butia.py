@@ -34,9 +34,9 @@ from functions import ButiaFunctions
 ERROR = -1
 
 # (MONITOR_BUTIA) Distinguimos segun el tipo de error
-ERROR_BOARD_DISCONECTED = -100
-ERROR_MODULE_NOT_PRESENT = -101
-ERROR_EXCEPTION = -102
+from plugins.butia.monitor import ERROR_BOARD_DISCONECTED
+from plugins.butia.monitor import ERROR_MODULE_NOT_PRESENT
+from plugins.butia.monitor import ERROR_EXCEPTION
 
 class USB4Butia(ButiaFunctions):
 

@@ -41,15 +41,13 @@ from TurtleArt.tatype import TYPE_INT, TYPE_FLOAT, TYPE_STRING, TYPE_NUMBER
 
 from plugins.plugin import Plugin
 
-# (MONITOR_BUTIA) Importamos MonitorButia
+# (MONITOR_BUTIA) Importamos MonitorButia y los tipos de errores
 from monitor import MonitorButia
+from plugins.butia.monitor import ERROR_BOARD_DISCONECTED
+from plugins.butia.monitor import ERROR_MODULE_NOT_PRESENT
+from plugins.butia.monitor import ERROR_EXCEPTION
 
 from gettext import gettext as _
-
-# (MONITOR_BUTIA) Distinguimos segun el tipo de error
-ERROR_BOARD_DISCONECTED = -100
-ERROR_MODULE_NOT_PRESENT = -101
-ERROR_EXCEPTION = -102
 
 #constants definitions
 ERROR = -1   # default return value in case of error
