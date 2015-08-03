@@ -41,8 +41,16 @@ from TurtleArt.tatype import TYPE_INT, TYPE_FLOAT, TYPE_STRING, TYPE_NUMBER
 
 from plugins.plugin import Plugin
 
-# (MONITOR_BUTIA) Importamos MonitorButia y los tipos de errores
+# (MONITOR_BUTIA)
 from monitor import MonitorButia
+from monitor import MONITOR_RETURN_TYPE_NO_OP
+from monitor import MONITOR_RETURN_TYPE_LOW
+from monitor import MONITOR_RETURN_TYPE_MEDIUM
+from monitor import MONITOR_RETURN_TYPE_HIGH
+from monitor import MONITOR_COLOR_NO_OP
+from monitor import MONITOR_COLOR_LOW
+from monitor import MONITOR_COLOR_MEDIUM
+from monitor import MONITOR_COLOR_HIGH
 
 from gettext import gettext as _
 
@@ -547,9 +555,38 @@ class Butia(Plugin):
 
     ################################ Refresh process ################################
 
+    #Agregado MONITOR_BUTIA
+    def update_color_monitor_sensor(self, sensor_name, value):
+        result = MONITOR_COLOR_NO_OP
+        if value == MONITOR_RETURN_TYPE_LOW:
+            result = MONITOR_COLOR_LOW
+        else:
+            if value == MONITOR_RETURN_TYPE_MEDIUM:
+                result = MONITOR_COLOR_MEDIUM
+            else:
+                if value == MONITOR_RETURN_TYPE_HIGH:
+                    result = MONITOR_COLOR_HIGH
+        special_block_colors[sensor_name] = COLOR_PRESENT[:]
+
+    #Agregado MONITOR_BUTIA
+    def update_colors_monitor(self, sensors_list):
+        color_grey = sensors_list['grey']
+        self.update_color_monitor_sensor('grey', color_grey)
+        color_light = sensors_list['light']
+        self.update_color_monitor_sensor('light', color_light)
+        color_distance = sensors_list['distance']
+        self.update_color_monitor_sensor('distance', color_distance)
+        color_button = sensors_list['button']
+        self.update_color_monitor_sensor('button', color_button)
+        color_motors = sensors_list['motors']
+        self.update_color_monitor_sensor('motors', color_motors)
+        special_block_colors['rightButia'] = MONITOR_COLOR_HIGH[:]
+
     def refresh(self):
         self.butia.refresh()
         self.check_for_device_change(True)
+        sensors_list = self.monitor_butia.get_monitor_evaluation()
+        self.update_colors_monitor(sensors_list)
 
     def update_colors(self):
         if self.butia.getMotorType() == 2:
