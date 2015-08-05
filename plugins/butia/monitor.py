@@ -33,7 +33,7 @@ class MonitorButia():
         }
 
     def evaluate_result(self, sensor_name,sensor_port, sensor_result):
-        self.sensors[sensor_name][sensor_port].evaluate_result(sensor_result)
+        self.sensors[sensor_name][sensor_port - 1].evaluate_result(sensor_result)
 
     def get_monitor_evaluation(self):
         elem_grey = self.sensors['grey'][1].get_monitor_evaluation()
