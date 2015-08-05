@@ -20,6 +20,7 @@ class MonitorElem():
         self.count_error_exception = 0
         self.count_error_butia = 0
         self.count_total = 0
+        self.inuse = 0
 
     def evaluate_result(self, result):
         self.count_total += 1

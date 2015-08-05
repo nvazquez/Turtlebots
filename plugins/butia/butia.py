@@ -749,6 +749,11 @@ class Butia(Plugin):
                 set_old_device_module = set_old_connected_device_module.difference(set_connected_device_module)
                 set_changed_device_module = set_new_device_module.union(set_old_device_module)
                 self.set_to_list(set_changed_device_module)
+                #ACA HAY QUE ACTIVAR Y DESACTIVAR LOS MONITORES
+                #**************************************************
+
+
+                #**************************************************
             else:
                 self.modules_changed = []
             if not(self.battery_color == self.old_battery_color):
@@ -832,7 +837,10 @@ class Butia(Plugin):
         return self.butia.getDistance(port, board)
 
     def getGray(self, port='0', board='0'):
-        return self.butia.getGray(port, board)
+        #LA LLAMADA AL MONITOR SE HACE CON EL PUERTO
+        value = self.butia.getGray(port, board)
+        self.monitor_butia.evaluate_result('grey',value)
+        return value
 
     def getResistance(self, port='0', board='0'):
         return self.butia.getResistance(port, board)

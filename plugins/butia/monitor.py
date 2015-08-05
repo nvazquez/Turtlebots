@@ -25,22 +25,22 @@ class MonitorButia():
 
     def __init__(self):
         self.sensors = {
-            'grey' : MonitorElem(),
-            'light' : MonitorElem(),
-            'distance' : MonitorElem(),
-            'button' : MonitorElem(),
-            'motors' : MonitorElem()
+            'grey' : [MonitorElem()] * 6,
+            'light' :[MonitorElem()] * 6,
+            'distance' : [MonitorElem()] * 6,
+            'button' : [MonitorElem()] * 6,
+            'motors' : [MonitorElem()] * 6
         }
 
-    def evaluate_result(self, sensor_name, sensor_result):
-        self.sensors[sensor_name].evaluate_result(sensor_result)
+    def evaluate_result(self, sensor_name,sensor_port, sensor_result):
+        self.sensors[sensor_name][sensor_port].evaluate_result(sensor_result)
 
     def get_monitor_evaluation(self):
-        elem_grey = self.sensors['grey'].get_monitor_evaluation()
-        elem_light = self.sensors['light'].get_monitor_evaluation()
-        elem_distance = self.sensors['distance'].get_monitor_evaluation()
-        elem_button = self.sensors['button'].get_monitor_evaluation()
-        elem_motors = self.sensors['motors'].get_monitor_evaluation()
+        elem_grey = self.sensors['grey'][1].get_monitor_evaluation()
+        elem_light = self.sensors['light'][1].get_monitor_evaluation()
+        elem_distance = self.sensors['distance'][1].get_monitor_evaluation()
+        elem_button = self.sensors['button'][1].get_monitor_evaluation()
+        elem_motors = self.sensors['motors'][1].get_monitor_evaluation()
         sensors_hash = {
             'grey' : elem_grey,
             'light' : elem_distance,
