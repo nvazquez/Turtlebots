@@ -43,7 +43,7 @@ class MonitorButia():
         elem_motors = self.sensors['motors'][1].get_monitor_evaluation()
         sensors_hash = {
             'grey' : elem_grey,
-            'light' : elem_distance,
+            'light' : elem_light,
             'distance' : elem_distance,
             'button' : elem_button,
             'motors' : elem_motors

@@ -827,15 +827,25 @@ class Butia(Plugin):
     def getFirmware(self):
         return self.butia.getFirmwareVersion(self.active_butia)
 
+    #MONITOR_BUTIA
     def getButton(self, port='0', board='0'):
-        return self.butia.getButton(port, board)
+        value = self.butia.getButton(port, board)
+        self.monitor_butia.evaluate_result('button', port, value)
+        return value
 
+    #MONITOR_BUTIA
     def getLight(self, port='0', board='0'):
-        return self.butia.getLight(port, board)
+        value = self.butia.getLight(port, board)
+        self.monitor_butia.evaluate_result('light', port, value)
+        return value
 
+    #MONITOR_BUTIA
     def getDistance(self, port='0', board='0'):
-        return self.butia.getDistance(port, board)
+        value = self.butia.getDistance(port, board)
+        self.monitor_butia.evaluate_result('distance', port, value)
+        return value
 
+    #MONITOR_BUTIA
     def getGray(self, port='0', board='0'):
         #LA LLAMADA AL MONITOR SE HACE CON EL PUERTO
         value = self.butia.getGray(port, board)
