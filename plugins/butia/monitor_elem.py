@@ -51,3 +51,14 @@ class MonitorElem():
                     return MONITOR_RETURN_TYPE_HIGH
         return MONITOR_RETURN_TYPE_NO_OP
 
+    def activate(self):
+        self.count_board_disconected = 0
+        self.count_module_not_present = 0
+        self.count_error_exception = 0
+        self.count_error_butia = 0
+        self.count_total = 0
+        self.inuse = 1
+
+    def unactivate(self):
+        self.inuse = 0
+

@@ -556,7 +556,7 @@ class Butia(Plugin):
     ################################ Refresh process ################################
 
     #Agregado MONITOR_BUTIA
-    def update_color_monitor_sensor(self, sensor_name, value):
+    def update_color_monitor_sensor(self, sensor_name,port, value):
         result = MONITOR_COLOR_NO_OP
         if value == MONITOR_RETURN_TYPE_LOW:
             result = MONITOR_COLOR_LOW
@@ -570,16 +570,9 @@ class Butia(Plugin):
 
     #Agregado MONITOR_BUTIA
     def update_colors_monitor(self, sensors_list):
-        color_grey = sensors_list['grey']
-        self.update_color_monitor_sensor('grey', color_grey)
-        color_light = sensors_list['light']
-        self.update_color_monitor_sensor('light', color_light)
-        color_distance = sensors_list['distance']
-        self.update_color_monitor_sensor('distance', color_distance)
-        color_button = sensors_list['button']
-        self.update_color_monitor_sensor('button', color_button)
-        color_motors = sensors_list['motors']
-        self.update_color_monitor_sensor('motors', color_motors)
+        for s in sensors_list:
+            self.update_color_monitor_sensor(s[0],s[1],s[2])
+
         special_block_colors['rightButia'] = MONITOR_COLOR_HIGH[:]
 
     def refresh(self):
@@ -752,7 +745,8 @@ class Butia(Plugin):
                 #ACA HAY QUE ACTIVAR Y DESACTIVAR LOS MONITORES
                 #**************************************************
 
-
+                self.monitor_butia.activate_monitor(set_new_device_module)
+                self.monitor_butia.desactivate_monitor(set_old_device_module)
                 #**************************************************
             else:
                 self.modules_changed = []

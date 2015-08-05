@@ -25,27 +25,40 @@ class MonitorButia():
 
     def __init__(self):
         self.sensors = {
-            'grey' : [MonitorElem()] * 6,
-            'light' :[MonitorElem()] * 6,
-            'distance' : [MonitorElem()] * 6,
-            'button' : [MonitorElem()] * 6,
-            'motors' : [MonitorElem()] * 6
+            'grey': [MonitorElem() for i in range(6)],
+            'light':[MonitorElem() for i in range(6)],
+            'distance': [MonitorElem() for i in range(6)],
+            'button': [MonitorElem() for i in range(6)],
+            'motors': [MonitorElem() for i in range(8)]
         }
+        self.sensors_name = ['grey', 'light', 'button', 'distance','motors']
 
     def evaluate_result(self, sensor_name,sensor_port, sensor_result):
         self.sensors[sensor_name][sensor_port - 1].evaluate_result(sensor_result)
 
     def get_monitor_evaluation(self):
-        elem_grey = self.sensors['grey'][1].get_monitor_evaluation()
-        elem_light = self.sensors['light'][1].get_monitor_evaluation()
-        elem_distance = self.sensors['distance'][1].get_monitor_evaluation()
-        elem_button = self.sensors['button'][1].get_monitor_evaluation()
-        elem_motors = self.sensors['motors'][1].get_monitor_evaluation()
-        sensors_hash = {
-            'grey' : elem_grey,
-            'light' : elem_light,
-            'distance' : elem_distance,
-            'button' : elem_button,
-            'motors' : elem_motors
-        }
-        return sensors_hash
+        res = []
+        for s in self.sensors_name:
+            for i in range(6):
+                if self.sensors[s][i].inuse == 1:
+                    res.append((s,i+1,self.sensors[s][i].get_monitor_evaluation()))
+        return res
+
+    def activate_monitor(self,set_new_devices):
+        for device in set_new_devices:
+            print(device)
+            words = device.split(":")
+            if any(words[0] in s for s in self.sensors_name):
+                self.sensors[words[0]][int(words[1])-1].activate()
+
+
+    def desactivate_monitor(self,set_old_devices):
+         for device in set_old_devices:
+            print(device)
+            words = device.split(":")
+            if any(words[0] in s for s in self.sensors_name):
+                self.sensors[words[0]][int(words[1])-1].unactivate()
+
+
+
+
