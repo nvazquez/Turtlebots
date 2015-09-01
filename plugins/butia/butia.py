@@ -214,6 +214,16 @@ class Butia(Plugin):
 
         #add block about movement of butia, this blocks don't allow multiple instances
 
+        #(MONITOR_BUTIA)
+        palette.add_block('resetMonitorButia',
+                     style='basic-style',
+                     label=_('reset Monitor Butia'),
+                     prim_name='resetMonitorButia',
+                     help_string=_('reset Monitor Butia'))
+        self.tw.lc.def_prim('resetMonitorButia', 0,
+            Primitive(self.reset_monitor_butia))
+        special_block_colors['resetMonitorButia'] = COLOR_PRESENT[:]
+
         palette.add_block('refreshButia',
                      style='basic-style',
                      label=_('refresh Butia'),
@@ -555,7 +565,7 @@ class Butia(Plugin):
 
     ################################ Refresh process ################################
 
-    #Agregado MONITOR_BUTIA
+    #(MONITOR_BUTIA)
     def update_color_monitor_sensor(self, sensor_name,port, value):
         result = MONITOR_COLOR_NO_OP
         if value == MONITOR_RETURN_TYPE_LOW:
@@ -568,12 +578,16 @@ class Butia(Plugin):
                     result = MONITOR_COLOR_HIGH
         special_block_colors[sensor_name] = COLOR_PRESENT[:]
 
-    #Agregado MONITOR_BUTIA
+    #(MONITOR_BUTIA)
     def update_colors_monitor(self, sensors_list):
         for s in sensors_list:
             self.update_color_monitor_sensor(s[0],s[1],s[2])
 
         special_block_colors['rightButia'] = MONITOR_COLOR_HIGH[:]
+
+    #(MONITOR_BUTIA)
+    def reset_monitor_butia(self):
+        self.monitor_butia.reset()
 
     def refresh(self):
         self.butia.refresh()

@@ -27,11 +27,11 @@ class MonitorButia():
         self.sensors = {
             'grey': [MonitorElem() for i in range(6)],
             'light':[MonitorElem() for i in range(6)],
-            'distance': [MonitorElem() for i in range(6)],
+            'distanc': [MonitorElem() for i in range(6)],
             'button': [MonitorElem() for i in range(6)],
             'motors': [MonitorElem() for i in range(8)]
         }
-        self.sensors_name = ['grey', 'light', 'button', 'distance','motors']
+        self.sensors_name = ['grey', 'light', 'button', 'distanc','motors']
 
     def evaluate_result(self, sensor_name,sensor_port, sensor_result):
         self.sensors[sensor_name][sensor_port - 1].evaluate_result(sensor_result)
@@ -59,6 +59,9 @@ class MonitorButia():
             if any(words[0] in s for s in self.sensors_name):
                 self.sensors[words[0]][int(words[1])-1].unactivate()
 
-
+    def reset(self):
+        for i in self.sensors_name:
+            for elem in self.sensors[i]:
+                elem.reset()
 
 
