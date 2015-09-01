@@ -14,10 +14,10 @@ MONITOR_RETURN_TYPE_LOW = 1
 MONITOR_RETURN_TYPE_MEDIUM = 2
 MONITOR_RETURN_TYPE_HIGH = 3
 
-MONITOR_COLOR_NO_OP = ["#FE9A2E","#DF7401"]
-MONITOR_COLOR_LOW = ["#00FFFF","#01DFD7"]
-MONITOR_COLOR_MEDIUM = ["#0080FF","#0174DF"]
-MONITOR_COLOR_HIGH = ["#0404B4", "#08088A"]
+MONITOR_COLOR_NO_OP = ["#FE9A2E","#808080"]
+MONITOR_COLOR_LOW = ["#FF0000","#808080"]
+MONITOR_COLOR_MEDIUM = ["#0080FF","#808080"]
+MONITOR_COLOR_HIGH = ["#0404B4","#808080"]
 
 from monitor_elem import MonitorElem
 
@@ -27,14 +27,14 @@ class MonitorButia():
         self.sensors = {
             'grey': [MonitorElem() for i in range(6)],
             'light':[MonitorElem() for i in range(6)],
-            'distance': [MonitorElem() for i in range(6)],
+            'distanc': [MonitorElem() for i in range(6)],
             'button': [MonitorElem() for i in range(6)],
             'motors': [MonitorElem() for i in range(8)]
         }
-        self.sensors_name = ['grey', 'light', 'button', 'distance','motors']
+        self.sensors_name = ['grey', 'light', 'button', 'distanc','motors']
 
     def evaluate_result(self, sensor_name,sensor_port, sensor_result):
-        self.sensors[sensor_name][sensor_port - 1].evaluate_result(sensor_result)
+        self.sensors[sensor_name][int(sensor_port) - 1].evaluate_result(sensor_result)
 
     def get_monitor_evaluation(self):
         res = []

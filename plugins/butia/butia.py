@@ -573,7 +573,6 @@ class Butia(Plugin):
         for s in sensors_list:
             self.update_color_monitor_sensor(s[0],s[1],s[2])
 
-        special_block_colors['rightButia'] = MONITOR_COLOR_HIGH[:]
 
     def refresh(self):
         self.butia.refresh()
@@ -750,6 +749,11 @@ class Butia(Plugin):
                 #**************************************************
             else:
                 self.modules_changed = []
+            #ACA ACTUALIZO EL COLOR SEGUN LOS ERRORES O USO
+            #*********************************************************************************
+            sensors_list = self.monitor_butia.get_monitor_evaluation()
+            self.update_colors_monitor(sensors_list)
+            #*********************************************************************************
             if not(self.battery_color == self.old_battery_color):
                 change_statics_blocks = True
                 self.old_battery_color = self.battery_color
