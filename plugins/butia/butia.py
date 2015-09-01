@@ -546,6 +546,33 @@ class Butia(Plugin):
             Primitive(self.reset_monitor_butia))
         special_block_colors['resetMonitorButia'] = COLOR_PRESENT[:]
 
+        palette4.add_block('monitorButiaLowFailure',
+                     style='box-style',
+                     label=_('FALLO BAJO'),
+                     prim_name='monitorButiaLowFailure',
+                     help_string=_('Low Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaLowFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaLowFailure'] = MONITOR_COLOR_LOW[:]
+
+        palette4.add_block('monitorButiaMediumFailure',
+                     style='box-style',
+                     label=_('FALLO MEDIO'),
+                     prim_name='monitorButiaMediumFailure',
+                     help_string=_('Medium Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaMediumFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaMediumFailure'] = MONITOR_COLOR_MEDIUM[:]
+
+        palette4.add_block('monitorButiaHighFailure',
+                     style='box-style',
+                     label=_('FALLO ALTO'),
+                     prim_name='monitorButiaHighFailure',
+                     help_string=_('High Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaHighFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaHighFailure'] = MONITOR_COLOR_HIGH[:]
+
 
     ################################ Turtle calls ################################
 
@@ -591,6 +618,9 @@ class Butia(Plugin):
     #(MONITOR_BUTIA)
     def reset_monitor_butia(self):
         self.monitor_butia.reset()
+
+    def failure_level_monitor_butia(self):
+        return 'sabe'
 
     def refresh(self):
         self.butia.refresh()
