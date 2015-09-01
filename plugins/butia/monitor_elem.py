@@ -62,3 +62,11 @@ class MonitorElem():
     def unactivate(self):
         self.inuse = 0
 
+    def reset(self):
+        if self.inuse == 1:
+            self.count_board_disconected = 0
+            self.count_module_not_present = 0
+            self.count_error_exception = 0
+            self.count_error_butia = 0
+            self.count_total = 0
+

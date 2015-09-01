@@ -59,6 +59,9 @@ class MonitorButia():
             if any(words[0] in s for s in self.sensors_name):
                 self.sensors[words[0]][int(words[1])-1].unactivate()
 
-
+    def reset(self):
+        for i in self.sensors_name:
+            for elem in self.sensors[i]:
+                elem.reset()
 
 

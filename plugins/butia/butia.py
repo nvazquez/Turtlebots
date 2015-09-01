@@ -533,6 +533,46 @@ class Butia(Plugin):
             Primitive(self.selectButia, arg_descs=[ArgSlot(TYPE_NUMBER)]))
         special_block_colors['selectButia'] = COLOR_PRESENT[:]
 
+        #(MONITOR_BUTIA)
+        palette4 = make_palette('butia-monitor', COLOR_NOTPRESENT, _('Monitor Butia extra blocks'),
+                                 init_on_start=True, translation=_('butia-monitor'))
+        #(MONITOR_BUTIA)
+        palette4.add_block('resetMonitorButia',
+                     style='basic-style',
+                     label=_('reset Monitor Butia'),
+                     prim_name='resetMonitorButia',
+                     help_string=_('reset Monitor Butia'))
+        self.tw.lc.def_prim('resetMonitorButia', 0,
+            Primitive(self.reset_monitor_butia))
+        special_block_colors['resetMonitorButia'] = COLOR_PRESENT[:]
+
+        palette4.add_block('monitorButiaLowFailure',
+                     style='box-style',
+                     label=_('FALLO BAJO'),
+                     prim_name='monitorButiaLowFailure',
+                     help_string=_('Low Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaLowFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaLowFailure'] = MONITOR_COLOR_LOW[:]
+
+        palette4.add_block('monitorButiaMediumFailure',
+                     style='box-style',
+                     label=_('FALLO MEDIO'),
+                     prim_name='monitorButiaMediumFailure',
+                     help_string=_('Medium Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaMediumFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaMediumFailure'] = MONITOR_COLOR_MEDIUM[:]
+
+        palette4.add_block('monitorButiaHighFailure',
+                     style='box-style',
+                     label=_('FALLO ALTO'),
+                     prim_name='monitorButiaHighFailure',
+                     help_string=_('High Failure Constant Monitor Butia'))
+        self.tw.lc.def_prim('monitorButiaHighFailure', 0,
+            Primitive(self.failure_level_monitor_butia))
+        special_block_colors['monitorButiaHighFailure'] = MONITOR_COLOR_HIGH[:]
+
 
     ################################ Turtle calls ################################
 
@@ -555,7 +595,7 @@ class Butia(Plugin):
 
     ################################ Refresh process ################################
 
-    #Agregado MONITOR_BUTIA
+    #(MONITOR_BUTIA)
     def update_color_monitor_sensor(self, sensor_name,port, value):
         result = MONITOR_COLOR_NO_OP
         if value == MONITOR_RETURN_TYPE_LOW:
@@ -568,11 +608,18 @@ class Butia(Plugin):
                     result = MONITOR_COLOR_HIGH
         special_block_colors[sensor_name] = COLOR_PRESENT[:]
 
-    #Agregado MONITOR_BUTIA
+    #(MONITOR_BUTIA)
     def update_colors_monitor(self, sensors_list):
         for s in sensors_list:
             self.update_color_monitor_sensor(s[0],s[1],s[2])
 
+
+    #(MONITOR_BUTIA)
+    def reset_monitor_butia(self):
+        self.monitor_butia.reset()
+
+    def failure_level_monitor_butia(self):
+        return 'sabe'
 
     def refresh(self):
         self.butia.refresh()
