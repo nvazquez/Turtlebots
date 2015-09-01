@@ -214,16 +214,6 @@ class Butia(Plugin):
 
         #add block about movement of butia, this blocks don't allow multiple instances
 
-        #(MONITOR_BUTIA)
-        palette.add_block('resetMonitorButia',
-                     style='basic-style',
-                     label=_('reset Monitor Butia'),
-                     prim_name='resetMonitorButia',
-                     help_string=_('reset Monitor Butia'))
-        self.tw.lc.def_prim('resetMonitorButia', 0,
-            Primitive(self.reset_monitor_butia))
-        special_block_colors['resetMonitorButia'] = COLOR_PRESENT[:]
-
         palette.add_block('refreshButia',
                      style='basic-style',
                      label=_('refresh Butia'),
@@ -542,6 +532,19 @@ class Butia(Plugin):
         self.tw.lc.def_prim('selectButia', 1,
             Primitive(self.selectButia, arg_descs=[ArgSlot(TYPE_NUMBER)]))
         special_block_colors['selectButia'] = COLOR_PRESENT[:]
+
+        #(MONITOR_BUTIA)
+        palette4 = make_palette('butia-monitor', COLOR_NOTPRESENT, _('Monitor Butia extra blocks'),
+                                 init_on_start=True, translation=_('butia-monitor'))
+        #(MONITOR_BUTIA)
+        palette4.add_block('resetMonitorButia',
+                     style='basic-style',
+                     label=_('reset Monitor Butia'),
+                     prim_name='resetMonitorButia',
+                     help_string=_('reset Monitor Butia'))
+        self.tw.lc.def_prim('resetMonitorButia', 0,
+            Primitive(self.reset_monitor_butia))
+        special_block_colors['resetMonitorButia'] = COLOR_PRESENT[:]
 
 
     ################################ Turtle calls ################################
