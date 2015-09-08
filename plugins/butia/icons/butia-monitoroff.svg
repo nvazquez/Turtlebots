@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.0"
@@ -14,8 +15,8 @@
    height="55"
    id="svg2381"
    sodipodi:version="0.32"
-   inkscape:version="0.48.4 r9939"
-   sodipodi:docname="butia-castoff.svg"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="butiaoff.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <metadata
      id="metadata3470">
@@ -25,12 +26,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
      inkscape:window-height="744"
-     inkscape:window-width="1366"
+     inkscape:window-width="1301"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      guidetolerance="10.0"
@@ -42,9 +44,9 @@
      id="base"
      showgrid="false"
      inkscape:zoom="8"
-     inkscape:cx="14.916178"
-     inkscape:cy="29.632458"
-     inkscape:window-x="0"
+     inkscape:cx="18.371413"
+     inkscape:cy="28.257305"
+     inkscape:window-x="65"
      inkscape:window-y="24"
      inkscape:current-layer="svg2381"
      inkscape:window-maximized="1" />
@@ -90,15 +92,11 @@
        style="fill:#ffffff;fill-opacity:1;stroke:none"
        inkscape:connector-curvature="0" />
   </g>
-  <text
-     xml:space="preserve"
-     style="font-size:30px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#010101;fill-opacity:1;stroke:#ffffff;font-family:Sans;-inkscape-font-specification:Sans Bold"
-     x="32"
-     y="49.625"
-     id="text3005"
-     sodipodi:linespacing="125%"><tspan
-       sodipodi:role="line"
-       id="tspan3007"
-       x="32"
-       y="49.625">C</tspan></text>
+  <image
+     width="32"
+     height="32"
+     xlink:href="data:image/png;base64,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 bHkdOGYfAAAAAElFTkSuQmCC "
+     id="image3133"
+     x="22.875"
+     y="23" />
 </svg>
