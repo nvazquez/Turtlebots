@@ -2,15 +2,17 @@
 # FING
 # GRUPO 9
 # 2015
-
+from __future__ import division
 from monitor import ERROR_BOARD_DISCONECTED
 from monitor import ERROR_MODULE_NOT_PRESENT
 from monitor import ERROR_EXCEPTION
 from monitor import ERROR
-from monitor import MONITOR_RETURN_TYPE_NO_OP
+from monitor import MONITOR_COLOR_NO_ERR
 from monitor import MONITOR_RETURN_TYPE_LOW
 from monitor import MONITOR_RETURN_TYPE_MEDIUM
 from monitor import MONITOR_RETURN_TYPE_HIGH
+from monitor import MONITOR_RETURN_TYPE_NO_ERR
+
 
 class MonitorElem():
 
@@ -37,26 +39,30 @@ class MonitorElem():
                         self.count_error_butia += 1
                     #else, valor normal, ver si lo contamos tambien
 
+
+
     def get_monitor_evaluation(self):
         list = [self.count_board_disconected, self.count_module_not_present, self.count_error_exception, self.count_error_butia]
-        max_error = max(list)
+        max_error = sum(list)
         if self.count_total != 0:
             avg_error = max_error / self.count_total
+            if max_error == 0:
+                return MONITOR_RETURN_TYPE_NO_ERR
             if avg_error < 0.25:
                 return MONITOR_RETURN_TYPE_LOW
             else:
-                if avg_error < 0.5:
+                if avg_error < 0.50:
                     return MONITOR_RETURN_TYPE_MEDIUM
                 else:
                     return MONITOR_RETURN_TYPE_HIGH
-        return MONITOR_RETURN_TYPE_NO_OP
+        return MONITOR_RETURN_TYPE_NO_ERR
 
     def activate(self):
-        self.count_board_disconected = 0
-        self.count_module_not_present = 0
-        self.count_error_exception = 0
-        self.count_error_butia = 0
-        self.count_total = 0
+        #self.count_board_disconected = 0
+        #self.count_module_not_present = 0
+        #self.count_error_exception = 0
+        #self.count_error_butia = 0
+        #self.count_total = 0
         self.inuse = 1
 
     def unactivate(self):

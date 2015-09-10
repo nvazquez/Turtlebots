@@ -2,6 +2,7 @@
 RD_VERSION = 0x00
 TURN = 0x01
 
+
 def getVersion(dev):
     dev.send([RD_VERSION])
     raw = dev.read(3)

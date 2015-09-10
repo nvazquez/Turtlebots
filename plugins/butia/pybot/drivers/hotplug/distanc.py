@@ -1,7 +1,7 @@
 
 RD_VERSION = 0x00
 GET_VALUE = 0x01
-
+ERROR = -1
 VCC = 65536
 
 def getVersion(dev):
@@ -12,5 +12,9 @@ def getVersion(dev):
 def getValue(dev):
     dev.send([GET_VALUE])
     raw = dev.read(3)
-    return VCC - (raw[1] + raw[2] * 256)
+    if not(raw[1] == 255):
+        return VCC - (raw[1] + raw[2] * 256)
+    else:
+        return ERROR
+
 

@@ -43,11 +43,11 @@ from plugins.plugin import Plugin
 
 # (MONITOR_BUTIA)
 from monitor import MonitorButia
-from monitor import MONITOR_RETURN_TYPE_NO_OP
+from monitor import MONITOR_RETURN_TYPE_NO_ERR
 from monitor import MONITOR_RETURN_TYPE_LOW
 from monitor import MONITOR_RETURN_TYPE_MEDIUM
 from monitor import MONITOR_RETURN_TYPE_HIGH
-from monitor import MONITOR_COLOR_NO_OP
+from monitor import MONITOR_COLOR_NO_ERR
 from monitor import MONITOR_COLOR_LOW
 from monitor import MONITOR_COLOR_MEDIUM
 from monitor import MONITOR_COLOR_HIGH
@@ -597,7 +597,10 @@ class Butia(Plugin):
 
     #(MONITOR_BUTIA)
     def update_color_monitor_sensor(self, sensor_name,port, value):
-        result = MONITOR_COLOR_NO_OP
+     result = MONITOR_COLOR_NO_ERR
+     if value == MONITOR_RETURN_TYPE_NO_ERR:
+        result = MONITOR_COLOR_NO_ERR
+     else:
         if value == MONITOR_RETURN_TYPE_LOW:
             result = MONITOR_COLOR_LOW
         else:
@@ -606,7 +609,16 @@ class Butia(Plugin):
             else:
                 if value == MONITOR_RETURN_TYPE_HIGH:
                     result = MONITOR_COLOR_HIGH
-        special_block_colors[sensor_name] = COLOR_PRESENT[:]
+
+     name = device_id_from_module_name[sensor_name]
+
+     for blk in self.tw.block_list.list:
+        if name in blk.name:
+            if str(port) in blk.spr.labels[0]:
+                special_block_colors[blk.name] = result
+                blk.refresh()
+
+
 
     #(MONITOR_BUTIA)
     def update_colors_monitor(self, sensors_list):
@@ -798,8 +810,7 @@ class Butia(Plugin):
                 self.modules_changed = []
             #ACA ACTUALIZO EL COLOR SEGUN LOS ERRORES O USO
             #*********************************************************************************
-            sensors_list = self.monitor_butia.get_monitor_evaluation()
-            self.update_colors_monitor(sensors_list)
+
             #*********************************************************************************
             if not(self.battery_color == self.old_battery_color):
                 change_statics_blocks = True
@@ -813,6 +824,9 @@ class Butia(Plugin):
                 change_extras_blocks = False
             if not(self.modules_changed == []) or change_statics_blocks or change_extras_blocks:
                 self.change_butia_palette_colors(False, change_statics_blocks, change_extras_blocks)
+
+            sensors_list = self.monitor_butia.get_monitor_evaluation()
+            self.update_colors_monitor(sensors_list)
 
     ################################ Movement calls ################################
 
@@ -887,14 +901,14 @@ class Butia(Plugin):
     #MONITOR_BUTIA
     def getDistance(self, port='0', board='0'):
         value = self.butia.getDistance(port, board)
-        self.monitor_butia.evaluate_result('distance', port, value)
+        self.monitor_butia.evaluate_result('distanc', port, value)
         return value
 
     #MONITOR_BUTIA
     def getGray(self, port='0', board='0'):
         #LA LLAMADA AL MONITOR SE HACE CON EL PUERTO
         value = self.butia.getGray(port, board)
-        self.monitor_butia.evaluate_result('grey',value)
+        self.monitor_butia.evaluate_result('grey',port,value)
         return value
 
     def getResistance(self, port='0', board='0'):
